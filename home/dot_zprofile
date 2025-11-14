@@ -1,0 +1,40 @@
+# ~/.zprofile
+
+# ====================================================================
+# 1. Define Color Variables (for easy use later)
+# ====================================================================
+# Text Styles
+RESET='\e[0m' # Prevent color bleeding
+BOLD='\e[1m'
+ITALIC='\e[3m'
+UNDERLINE='\e[4m'
+
+# Text Colors
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+MAGENTA='\e[35m'
+CYAN='\e[36m'
+WHITE='\e[37m'
+
+# ====================================================================
+# 2. Display Welcome Message and Date/Time
+# ====================================================================
+# Display welcome message
+echo "${GREEN}Welcome back, ${BOLD}${YELLOW}$(whoami)${RESET}${GREEN}!${RESET}"
+
+# Display current date and time
+echo "${CYAN}Date & Time: ${WHITE}$(date)${RESET}"
+
+echo ""
+
+# ====================================================================
+# 3. Display System Information (using uname command)
+# ====================================================================
+echo "${BOLD}${BLUE}System Information:${RESET}"
+# -s: kernel name, -r: kernel release, -m: machine hardware name
+echo "${ITALIC}  OS: $(uname -s) | Release: $(uname -r) | Arch: $(uname -m)${RESET}"
+
+echo ""
+
