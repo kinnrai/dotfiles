@@ -1,0 +1,12 @@
+# Flutter
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$HOME/.pub-cache/bin:$PATH"
+
+# GPG
+# export GPG_TTY=$(tty)
+export GPG_TTY=$TTY # if use powerlevel10k
+
+# uv
+export PATH="$HOME/.local/bin:$PATH"
+
