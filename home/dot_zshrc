@@ -1,0 +1,262 @@
+# Powerlevel10k
+# Must at the top !!!
+# @see https://github.com/romkatv/powerlevel10k
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+HIST_STAMPS="yyyy-mm-dd"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+
+# >>> plugins config
+
+# bgnotify
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
+# @required terminal-notifier
+bgnotify_bell=false   ## disable terminal bell
+bgnotify_threshold=4  ## set your own notification threshold
+function bgnotify_formatted {
+  ## $1=exit_status, $2=command, $3=elapsed_time
+
+  # Humanly readable elapsed time
+  local elapsed="$(( $3 % 60 ))s"
+  (( $3 < 60 ))   || elapsed="$((( $3 % 3600) / 60 ))m $elapsed"
+  (( $3 < 3600 )) || elapsed="$((  $3 / 3600 ))h $elapsed"
+
+  [ $1 -eq 0 ] && title="success" || title="fail"
+  [ $1 -eq 0 ] && icon="$HOME/icons/success.png" || icon="$HOME/icons/fail.png"
+  bgnotify "$title - took ${elapsed}" "$2" "$icon"
+}
+
+# colorize
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colorize
+# @required pygmentize
+ZSH_COLORIZE_TOOL=pygmentize
+ZSH_COLORIZE_STYLE="default"
+
+# python
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/python
+PYTHON_AUTO_VRUN=true
+PYTHON_VENV_NAME=".venv"
+PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
+
+# ssh-agent
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+zstyle :omz:plugins:ssh-agent ssh-add-args --apple-load-keychain
+
+# vi-mode
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vi-mode
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_SET_CURSOR=true
+# MODE_INDICATOR="%F{green}--Normal--%f"
+# INSERT_MODE_INDICATOR="%F{red}--Insert--%f"
+VI_MODE_CURSOR_NORMAL=2
+VI_MODE_CURSOR_VISUAL=2
+VI_MODE_CURSOR_INSERT=5
+VI_MODE_CURSOR_OPPEND=3
+
+# zoxide
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zoxide
+ZOXIDE_CMD_OVERRIDE=cd
+
+# zsh-autosuggestions
+# @see https://github.com/zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8,bold,underline"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+# <<<
+
+# >>> plugins loaded
+plugins=(
+    aliases
+    brew
+    bgnotify
+    colored-man-pages
+    colorize
+    # command-not-found
+    copypath
+    copyfile
+    extract
+    flutter
+    fnm
+    gh
+    gitfast
+    git-open
+    gpg-agent
+    hitokoto
+    history
+    last-working-dir
+    macos
+    man
+    npm
+    pip
+    pod
+    python
+    rsync
+    safe-paste
+    ssh
+    ssh-agent
+    sudo
+    uv
+    vi-mode
+    you-should-use
+    zoxide
+    zsh-autosuggestions
+    zsh-history-substring-search
+    zsh-syntax-highlighting
+)
+# <<<
+
+# Shell completion configuration
+fpath+=${HOMEBREW_PREFIX}/share/zsh/site-functions
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+autoload -U compinit && compinit
+source "$ZSH/oh-my-zsh.sh"
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+export LANG=zh_CN.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cat="ccat"
+alias g="gemini -p"
+alias hi="hitokoto"
+alias pip="pip3"
+alias pn="pnpm"
+alias python="python3"
+alias python-config="python3-config"
+alias vim="nvim"
+alias zshconfig="vim ~/.zshrc"
+
+# Ghostty shell integration.
+# @see https://ghostty.org/docs/features/shell-integration
+GHOSTTY_INTEGRATION_PATH="${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ] && [ -f "$GHOSTTY_INTEGRATION_PATH" ]; then
+    builtin source "$GHOSTTY_INTEGRATION_PATH"
+fi
+
+# Homebrew Command Not Found
+# @see https://github.com/Homebrew/homebrew-command-not-found
+HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"
+if [ -f "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER" ]; then
+    builtin source "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER";
+fi
+
+# Yazi
+# @see https://yazi-rs.github.io/docs/quick-start
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+# fnm
+# @see https://github.com/Schniz/fnm
+eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
+
+# Powerlevel10k
+# Must at the bottom !!!
+# @see https://github.com/romkatv/powerlevel10k
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
