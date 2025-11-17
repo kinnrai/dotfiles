@@ -34,8 +34,8 @@ CASE_SENSITIVE="true"
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -217,14 +217,11 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cat="ccat"
-alias g="gemini -p"
-alias hi="hitokoto"
 alias pip="pip3"
 alias pn="pnpm"
 alias python="python3"
 alias python-config="python3-config"
 alias vim="nvim"
-alias zshconfig="vim ~/.zshrc"
 
 # Ghostty shell integration.
 # @see https://ghostty.org/docs/features/shell-integration
