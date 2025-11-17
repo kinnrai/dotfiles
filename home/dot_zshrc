@@ -222,6 +222,22 @@ alias python="python3"
 alias python-config="python3-config"
 alias vim="nvim"
 
+# bsi = Brew Search + Info
+# This function searches for packages and lets you view their info in real-time within the fzf preview window.
+bsi() {
+  brew search "$1" | fzf --preview 'brew info {}' --preview-window=right:60%:wrap
+}
+
+# bsii = Brew Search + Info + Install
+# An enhanced version of bsi, pressing Enter on a selection will install it directly.
+bsii() {
+  local selected_pkg
+  selected_pkg=$(brew search "$1" | fzf --preview 'brew info {}' --preview-window=right:60%:wrap)
+  if [[ -n "$selected_pkg" ]]; then
+    brew install "$selected_pkg"
+  fi
+}
+
 # Powerlevel10k
 # @see https://github.com/romkatv/powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
