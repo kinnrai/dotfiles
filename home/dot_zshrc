@@ -102,9 +102,10 @@ function bgnotify_formatted {
 
 # colorize
 # @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colorize
-# @required pygmentize
-ZSH_COLORIZE_TOOL=pygmentize
-ZSH_COLORIZE_STYLE="default"
+# @required pygments or chroma
+ZSH_COLORIZE_TOOL=chroma
+ZSH_COLORIZE_STYLE="colorful"
+ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 
 # python
 # @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/python
@@ -223,16 +224,18 @@ alias python-config="python3-config"
 alias vim="nvim"
 
 # bsi = Brew Search + Info
+# @required fzf
 # This function searches for packages and lets you view their info in real-time within the fzf preview window.
 bsi() {
-  brew search "$1" | fzf --preview 'brew info {}' --preview-window=right:60%:wrap
+  brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap
 }
 
 # bsii = Brew Search + Info + Install
+# @required fzf
 # An enhanced version of bsi, pressing Enter on a selection will install it directly.
 bsii() {
   local selected_pkg
-  selected_pkg=$(brew search "$1" | fzf --preview 'brew info {}' --preview-window=right:60%:wrap)
+  selected_pkg=$(brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap)
   if [[ -n "$selected_pkg" ]]; then
     brew install "$selected_pkg"
   fi
