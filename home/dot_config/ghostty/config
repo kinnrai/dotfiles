@@ -1,0 +1,53 @@
+# =====================================================
+# Basic Settings
+# =====================================================
+
+# Font family
+font-family = "Maple Mono NF CN"
+# Font bold (macOS only)
+font-thicken = true
+# Theme
+theme = "light:Catppuccin Latte, dark:Catppuccin Mocha"
+# Hide mouse while typing
+mouse-hide-while-typing = true
+# Background opacity
+background-opacity = 0.6
+# Apply background opacity to cells with rewritten background colors (e.g., Neovim and Tmux)
+background-opacity-cells = true
+# Enable background blur
+background-blur = true
+# Balance window padding across all four edges
+window-padding-balance = true
+# Window padding color uses the background color of the nearest grid cell
+window-padding-color = extend-always
+# New windows and tabs will inherit the working directory of the previously focused window
+window-inherit-working-directory = true
+# New windows and tabs will inherit the font size of the previously focused window
+window-inherit-font-size = true
+# Use colors in the Display P3 color space (macOS only)
+window-colorspace = display-p3
+# Focus follows mouse
+focus-follows-mouse = true
+# Automatically copy selected text to the system clipboard
+copy-on-select = clipboard
+# Quick terminal position
+quick-terminal-position = top
+# Quick terminal size (height, width), unit "%" or "px"
+# Specifying only one value affects its main axis
+quick-terminal-size = 50%
+# macOS titlebar style
+macos-titlebar-style = transparent
+# Disable macOS window shadow
+macos-window-shadow = false
+# Set the term environment variable to ensure compatibility
+term = "xterm-256color"
+# Cursor trail effect
+custom-shader = "~/.config/ghostty/shaders/ghostty-shader-playground/public/shaders/cursor_smear.glsl"
+
+# =====================================================
+# Keybindings
+# =====================================================
+
+# Quick terminal
+keybind = global:cmd+t=toggle_quick_terminal
+
