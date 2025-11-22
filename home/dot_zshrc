@@ -263,6 +263,10 @@ if [[ -f "${HOMEBREW_COMMAND_NOT_FOUND_HANDLER}" ]]; then
     source "${HOMEBREW_COMMAND_NOT_FOUND_HANDLER}";
 fi
 
+# Bitwarden CLI
+# @see https://bitwarden.com/help/cli
+eval "$(bw completion --shell zsh); compdef _bw bw;"
+
 # fnm
 # @see https://github.com/Schniz/fnm
 # This "> /dev/null 2>&1" is important, in order not to use the print of fnm
