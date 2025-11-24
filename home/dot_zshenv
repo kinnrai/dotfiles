@@ -56,7 +56,6 @@ export SHELL_SESSIONS_DISABLE=1
 
 # Python History
 export PYTHON_HISTORY="$XDG_STATE_HOME/python_history" # for python v3.13.0a3 or later
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
