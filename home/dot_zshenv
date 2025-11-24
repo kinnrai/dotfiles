@@ -1,18 +1,65 @@
+# --- XDG Base Directory Standards ---
+# @see https://specifications.freedesktop.org/basedir/latest/
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# --- ZSH XDG Config ---
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
 # Android
 export ANDROID_HOME="$HOME/Library/Android/sdk"
+export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# Bash
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+
+# Cargo (Rust)
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
+
+# CocoaPods (Objective-C / Swift)
+export CP_HOME_DIR="$XDG_DATA_HOME/cocoapods"
+
+# Docker
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 
 # Dart
 export PATH="$HOME/.pub-cache/bin:$PATH"
 
+# GnuPG(GPG)
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GPG_TTY=$TTY
+
 # Golang
-export GOPATH="$HOME/.go"
+export GOPATH="$XDG_DATA_HOME/go"
+export GOCACHE="$XDG_CACHE_HOME/go/cache"
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 export PATH="$GOPATH/bin:$PATH"
 
-# GPG
-# export GPG_TTY=$(tty)
-export GPG_TTY=$TTY # if use powerlevel10k
+# Gradle (Java/Android Build Tool)
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
+
+# Konan (Kotlin)
+export KONAN_DATA_DIR="$XDG_DATA_HOME/konan"
+
+# NPM
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
+
+# Zsh
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export SHELL_SESSIONS_DISABLE=1
+
+# Python History
+export PYTHON_HISTORY="$XDG_STATE_HOME/python_history" # for python v3.13.0a3 or later
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
 # uv
 export PATH="$HOME/.local/bin:$PATH"
 
+# Vim and Neovim
+export VIMINIT='let $MYVIMRC = !has("nvim") ? "$XDG_CONFIG_HOME/vim/vimrc" : "$XDG_CONFIG_HOME/nvim/init.lua" | source $MYVIMRC'
