@@ -1,7 +1,13 @@
-# Flutter
+# Android
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
+
+# Dart
 export PATH="$HOME/.pub-cache/bin:$PATH"
+
+# Golang
+export GOPATH="$HOME/.go"
+export PATH="$GOPATH/bin:$PATH"
 
 # GPG
 # export GPG_TTY=$(tty)
