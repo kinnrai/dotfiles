@@ -1,0 +1,323 @@
+" ===========================================
+" = Plugins =================================
+" ===========================================
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
+Plug 'easymotion/vim-easymotion'
+
+" ===========================================
+" = Basic Configuration =====================
+" ===========================================
+set clipboard+=unnamed    " Sync ideavim clipboard with system clipboard
+set showmode
+set ignorecase
+set scrolloff=30
+set history=200
+set number                " Show line numbers
+set relativenumber        " Use relative line numbers
+set incsearch hlsearch
+set argtextobj            " Efficient method parameter editing (e.g., caa, daa, vaa)
+set sneak                 " Use s or S followed by two characters for quick jump
+set ideajoin              " Use ctrl + j to join two strings together
+set timeoutlen=0
+set which-key
+set notimeout
+
+" ===========================================
+" = No Leader Keymaps =======================
+" ===========================================
+" Insert mode mappings
+imap <C-h> <Left>
+imap <C-j> <Down>
+imap <C-k> <Up>
+imap <C-l> <Right>
+
+" Normal mode mappings
+nmap ge <action>(GotoNextError)
+nmap gt <action>(GotoTest)
+nmap gm <action>(MethodUp)
+nmap gn <action>(MethodDown)
+nmap gi <action>(GotoImplementation)
+nmap ga <action>(Annotate)
+nmap gb <action>(Back)
+nmap \e :e ~/.ideavimrc<CR>
+" Bookmarks
+nmap ma mA
+nmap cm <action>(ToggleBookmark)
+nmap g1 <action>(GotoBookmark1)
+nmap g2 <action>(GotoBookmark2)
+nmap g3 <action>(GotoBookmark3)
+nmap g4 <action>(GotoBookmark4)
+nmap g5 <action>(GotoBookmark5)
+
+" Delete related
+nmap df d$
+nmap dl d^
+nmap dam <action>(MethodUp)v0Of{%d
+
+" Paste without replacing yank content
+vmap p _dp
+vmap t <action>(EditorSelectWord)
+" Translate
+vmap tt <action>($EditorTranslateAction)
+" In normal mode, move between open files, L to left, H to right
+nmap L <action>(NextTab)
+nmap H <action>(PreviousTab)
+
+" Find next or previous highlighted element
+nmap <C-j> <action>(GotoNextElementUnderCaretUsage)
+nmap <C-k> <action>(GotoPrevElementUnderCaretUsage)
+
+" ===========================================
+" = Above content doesn't need leader key ===
+" = Below mappings need leader key ==========
+" ===========================================
+" leaderkey (using space as leader)
+let mapleader=" "
+
+" ===========================================
+
+" f: Find ⭐️
+
+" File search
+nmap <leader>ff <action>(GotoFile)
+
+" Text search
+nmap <leader>ft <action>(FindInPath)
+
+" Locate current file in project view
+nmap <leader>fl <action>(SelectInProjectView)
+
+" Action search
+nmap <leader>fc <action>(GotoAction)
+
+nmap <leader>fn <action>(GotoClass)
+" Code formatting
+nmap <leader>fm <action>(ReformatCode) \| <action>(OptimizeImports)
+
+" View controller path method location (requires RestfulTool plugin)
+nmap <leader>fp <action>(Toolkit.GotoServiceV2)
+
+" ===========================================
+
+" p: Project Switch ⭐️
+" Switch to previous project
+nmap <leader>pa <action>(PreviousProjectWindows)
+
+" Switch to next project
+nmap <leader>pa <action>(NextProjectWindows)
+
+" ===========================================
+
+" g: Git ⭐️
+nmap <leader>gr <action>(Vcs.RollbackChangedLines)
+
+nmap <leader>gu <action>(Git.Pull)
+
+nmap <leader>gp <action>(Vcs.Push)
+
+nmap <leader>ga <action>(Git.Branches)
+
+" ===========================================
+
+" i: Insert ⭐️
+nmap <leader>i f(a
+
+" ===========================================
+
+" j: add Semicolon and goto nextline⭐️
+" nmap <leader>j A;<ESC>o
+
+" ===========================================
+
+" n: No Highlight ⭐️
+nmap <leader>nl :nohlsearch<CR>
+
+" ===========================================
+
+" s: Show ⭐️
+
+" Show file structure (functions and member variables, etc.)
+nmap <leader>ss <action>(FileStructurePopup)
+
+" Show bookmarks in current project
+nmap <leader>sb <action>(ShowBookmarks)
+
+
+" ===========================================
+
+" r: Run/Re ⭐️
+nmap <leader>rr <action>(Rerun)
+
+nmap <leader>rt <action>(RerunTests)
+
+" Rename selected element (function/variable)
+nmap rn <action>(RenameElement)
+noremap <Space>re :action RenameElement<CR>
+
+" Reload ideavim config file
+nmap <leader>rs <action>(IdeaVim.ReloadVimRc.reload)
+
+" Choose debug configuration
+nmap <leader>rc :action ChooseDebugConfiguration<CR>
+
+" Rename file
+" nmap <leader>rf <action>(RenameElement)
+" ===========================================
+
+" w: Window Split/Navigation ⭐️ (uncomment if needed)
+nmap <leader>ww <C-W>w
+nmap <leader>wd <C-W>c
+nmap <leader>wj <C-W>j
+nmap <leader>wk <C-W>k
+nmap <leader>wh <C-W>h
+nmap <leader>wl <C-W>l
+nmap <leader>ws <C-W>s
+nmap <leader>w- <C-W>s
+nmap <leader>wv <C-W>v
+nmap <leader>w\| <C-W>v
+
+" ===========================================
+
+" z: zip(fold) ⭐️
+nmap <leader>zo <action>(ExpandAllRegions)
+
+nmap <leader>zc <action>(CollapseAllRegions)
+
+" ===========================================
+
+" c: Close Opened Files ⭐️
+nmap <leader>c :q!<CR>
+
+nmap <leader>br <action>(CloseAllToTheRight)
+
+nmap <leader>bl <action>(CloseAllToTheLeft)
+
+nmap <leader>be <action>(CloseAllEditorsButActive)
+
+" Copy file name or path
+nmap <leader>cp <action>(CopyAbsolutePath)
+
+nmap <leader>cn <action>(CopyFileName)
+
+" ===========================================
+
+" e: Project Explorer ⭐️
+nmap <leader>e <action>(ActivateProjectToolWindow)
+
+" e: Extract (only works in visual mode)
+vmap em <action>(ExtractMethod)
+
+vmap ec <action>(IntroduceConstant)
+
+vmap ef <action>(IntroduceField)
+
+vmap ev <action>(IntroduceVariable)
+
+vmap gam <Action>(StringManipulation.Group.SwitchCase)
+
+" ===========================================
+
+" m: Project Dependency Tools (maven/gradle)
+" Refresh maven/gradle project
+nmap <leader>ms <action>(ExternalSystem.ProjectRefreshAction)
+
+" ===========================================
+
+" t: Toggle Windows
+map <Leader>to <action>(ActivateTODOToolWindow)
+
+map <Leader>ta <action>(HideActivateWindow)
+
+map <leader>tc <action>(ActivateTerminalToolWindow)
+noremap <Space>tr :action $TranslateAndReplaceAction<CR>
+
+nmap tt <action>(GenerateConstructor)
+
+" ===========================================
+" = IDE and Vim Keybinding Persistence ======
+" ===========================================
+sethandler <C-A> a:ide
+sethandler <C-C> a:vim
+sethandler <C-F> a:ide
+sethandler <C-G> a:ide
+sethandler <C-P> a:vim
+sethandler <C-I> a:ide
+sethandler <C-O> a:ide
+sethandler <C-Q> a:vim
+sethandler <C-R> a:ide
+sethandler <C-S> a:vim
+sethandler <C-V> a:vim
+sethandler <C-H> a:vim
+
+" ===========================================
+" = which-key ===============================
+" ===========================================
+
+" Find/Format functions
+let g:WhichKeyDesc_FindOrFormat = "<leader>f FindOrFormat"
+let g:WhichKeyDesc_FindOrFormat_FindFile = "<leader>ff FindFile"
+let g:WhichKeyDesc_FindOrFormat_FindText = "<leader>ft FindText"
+let g:WhichKeyDesc_FindOrFormat_FindFileLocation = "<leader>fl FindFileLocation"
+let g:WhichKeyDesc_FindOrFormat_Commands = "<leader>fc Commands"
+let g:WhichKeyDesc_FindOrFormat_Format = "<leader>fm Format"
+let g:WhichKeyDesc_GotoRequestService = "<leader>fp GotoRequestService"
+
+" Project switching
+let g:WhichKeyDesc_FindOrFormat_PreviousProject = "<leader>pa PreviousProject"
+let g:WhichKeyDesc_FindOrFormat_NextProject = "<leader>pa NextProject"
+
+" Git related
+let g:WhichKeyDesc_Git = "<leader>g Git"
+let g:WhichKeyDesc_Git_RollbackHunk = "<leader>gr RollbackHunk"
+let g:WhichKeyDesc_Git_Pull = "<leader>gr Pull"
+let g:WhichKeyDesc_Git_Pull = "<leader>gp Push"
+let g:WhichKeyDesc_Git_ShowBranch = "<leader>gs Git.Branches"
+
+" Insert related
+let g:WhichKeyDesc_InsertAfterBrackets = "<leader>i InsertAfterBrackets"
+let g:WhichKeyDesc_InsertSemicolon = "<leader>j InsertSemicolon"
+
+" No highlight
+let g:WhichKeyDesc_No_Highlight = "<leader>nl NoHighlight"
+
+" Show functions
+let g:WhichKeyDesc_Show = "<leader>s Show"
+let g:WhichKeyDesc_Show_FileStructure = "<leader>ss ShowFileStructure"
+let g:WhichKeyDesc_Show_Bookmarks = "<leader>sb ShowBookmarks"
+
+" Run/Refactor related
+let g:WhichKeyDesc_RunOrRe = "<leader>r RunOrRe"
+let g:WhichKeyDesc_RunOrRe_ReRun = "<leader>rr ReRun"
+let g:WhichKeyDesc_RunOrRe_ReRunTests = "<leader>rt ReRunTests"
+let g:WhichKeyDesc_RunOrRe_Rename = "<leader>rn Rename"
+let g:WhichKeyDesc_IdeaVim_Reload = "<leader>rs ConfigReload"
+
+" Zip/Unzip: refers to code block folding/unfolding in IDE
+let g:WhichKeyDesc_Zip = "<leader>z Zip"
+let g:WhichKeyDesc_Zip_unZipAll = "<leader>zo unZipAll"
+let g:WhichKeyDesc_Zip_ZipAll = "<leader>zc ZipAll"
+
+" Close/Switch file buffers
+let g:WhichKeyDesc_CloseBuffer = "<leader>c CloseBuffer"
+let g:WhichKeyDesc_Close_Right = "<leader>cr CloseAllToTheRight"
+let g:WhichKeyDesc_Close_Left = "<leader>cl CloseAllToTheLeft"
+
+" nerdTree
+let g:WhichKeyDesc_ToggleExplorerOrExtract = "<leader>e ToggleExplorer"
+
+" Remap multiple-cursors shortcuts to match terryma/vim-multiple-cursors
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+xmap <C-p> <Plug>RemoveOccurrence
+
+" Note that the default <A-n> and g<A-n> shortcuts don't work on Mac due to dead keys.
+" <A-n> is used to enter accented text e.g. ñ
+" Feel free to pick your own mappings that are not affected. I like to use <leader>
+nmap <leader><C-n> <Plug>AllWholeOccurrences
+xmap <leader><C-n> <Plug>AllWholeOccurrences
+nmap <leader>g<C-n> <Plug>AllOccurrences
+xmap <leader>g<C-n> <Plug>AllOccurrences
