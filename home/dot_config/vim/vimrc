@@ -1,0 +1,162 @@
+"=============================================
+" XDG Standard Setup
+" ============================================
+
+" Set runtime path to point to ~/.config/vim and ~/.local/share/vim
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+" Set pack path
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+" Store Netrw (file explorer) data in the XDG directory
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+
+" --- Junk File Isolation (Swap, Backup, Undo, View) ---
+" Automatically create directories to avoid polluting project directories
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
+set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
+
+" Set viminfo location
+if !has('nvim')
+    set viminfofile=$XDG_STATE_HOME/vim/viminfo
+endif
+
+
+"=============================================
+"  Basic Settings
+"=============================================
+
+" 1. Disable Vi compatibility mode to enable powerful Vim features
+set nocompatible
+
+" 2. Set file encoding
+set encoding=utf-8          " Use UTF-8 internally
+set fileencodings=utf-8,gbk " Try UTF-8 first when opening files, otherwise use GBK
+
+" 3. Enable history (commands, search, etc.)
+set history=1000
+
+" 4. Set command line height
+set cmdheight=2
+
+" 5. Enable mouse support in visual mode (requires terminal support)
+set mouse=v
+
+" 6. Integrate with system clipboard
+set clipboard+=unnamed
+
+
+"=============================================
+"  File & Backup
+"=============================================
+
+" 1. Automatically read external modifications
+set autoread
+
+
+"=============================================
+"  Display & Editing
+"=============================================
+
+" 1. Syntax highlighting and file type detection
+syntax on            " Enable syntax highlighting
+filetype plugin on   " Load plugins based on file type (built-in, no external plugins needed)
+filetype indent on   " Set auto-indent rules based on file type
+
+" 2. Line numbers and relative line numbers
+set number           " Show line number
+set relativenumber   " Relative line number
+
+" 3. Cursor and search settings
+set cursorline       " Highlight current line
+set showmatch        " Briefly highlight matching brackets
+set hlsearch         " Highlight search results
+set incsearch        " Incremental search
+set ignorecase       " Ignore case when searching
+set smartcase        " Enable case-sensitive search if capital letters are present
+
+" 4. Status line and command prompts
+set laststatus=2     " Always show status line
+set ruler            " Show cursor position (row/col)
+set showcmd          " Show partial command in the bottom right
+set showmode         " Show current mode (e.g., -- INSERT --)
+
+" 5. Indentation and alignment
+set tabstop=4        " Display Tab as 4 spaces
+set shiftwidth=4     " Number of spaces moved by << and >> commands
+set expandtab        " Convert Tab to spaces
+set autoindent       " Copy indentation from current line to next
+set smartindent      " Smart auto-indenting based on syntax
+set smarttab         " Make Tab behavior smarter in insert mode
+
+" 6. Text wrapping
+set wrap             " Enable wrapping
+set linebreak        " Wrap at word boundaries
+set breakindent      " Maintain indentation after wrapping
+set showbreak=++     " Show indicator at the beginning of wrapped lines
+
+
+"=============================================
+"  Key Mappings
+"=============================================
+
+" 1. Disable default help key F1
+nnoremap <F1> <NOP>
+inoremap <F1> <NOP>
+vnoremap <F1> <NOP>
+
+" 2. Quick save and quit
+" Note: Default leader is backslash (\), redefine it below
+let mapleader = ","         " Change leader key to comma
+nnoremap <leader>q :q<CR>
+
+" 3. Make Y behave like C or D (yank to end of line)
+nnoremap Y y$
+
+" 4. Clear search highlighting
+nnoremap <leader><space> :nohlsearch<CR>
+
+
+"=============================================
+"  Completion
+"=============================================
+
+" 1. Use arrow keys to select from popup menu in insert mode
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
+" Select option if menu visible when pressing <Tab>, otherwise insert tab
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+"=============================================
+"  Other Common Settings
+"=============================================
+
+" 1. Set split direction
+set splitbelow  " New window below current one for :split
+set splitright  " New window right of current one for :vsplit
+
+" 2. Intuitive window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" 3. Set scroll offset (keep lines visible above/below cursor)
+set scrolloff=3
+
+" 4. Set max column width (common for coding/review)
+set colorcolumn=80
+highlight ColorColumn ctermbg=8
+
+" 5. Optimize for fast terminal connection (avoids interference with tmux)
+set ttyfast
+
