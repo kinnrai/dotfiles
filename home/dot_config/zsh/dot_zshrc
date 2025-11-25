@@ -1,0 +1,256 @@
+# Powerlevel10k
+# @see https://github.com/romkatv/powerlevel10k
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# >>> Oh My Zsh settings
+
+# OMZ: Main settings
+# @see https://github.com/ohmyzsh/ohmyzsh/wiki/Settings#main-settings
+export ZSH="${XDG_DATA_HOME:-$HOME/.local/share}/oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_CUSTOM="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/custom"
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+
+# OMZ: Update settings
+# @see https://github.com/ohmyzsh/ohmyzsh/wiki/Settings#update-settings
+zstyle ':omz:update' mode disabled # use chezmoi to update
+
+# OMZ: Completion settings
+# @see https://github.com/ohmyzsh/ohmyzsh/wiki/Settings#completion-settings
+ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump-$(hostname)-$ZSH_VERSION"
+COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+CASE_SENSITIVE="true"
+# HYPHEN_INSENSITIVE="true"
+
+# OMZ: Library settings
+# @see https://github.com/ohmyzsh/ohmyzsh/wiki/Settings#library-settings
+HIST_STAMPS="yyyy-mm-dd"
+
+# <<<
+
+
+# >>> Plugins config
+
+# bgnotify
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bgnotify
+# @required terminal-notifier
+bgnotify_bell=false   ## disable terminal bell
+bgnotify_threshold=4  ## set your own notification threshold
+function bgnotify_formatted {
+  ## $1=exit_status, $2=command, $3=elapsed_time
+
+  # Humanly readable elapsed time
+  local elapsed="$(( $3 % 60 ))s"
+  (( $3 < 60 ))   || elapsed="$((( $3 % 3600) / 60 ))m $elapsed"
+  (( $3 < 3600 )) || elapsed="$((  $3 / 3600 ))h $elapsed"
+
+  [ $1 -eq 0 ] && title="success" || title="fail"
+  [ $1 -eq 0 ] && icon="$HOME/icons/success.png" || icon="$HOME/icons/fail.png"
+  bgnotify "$title - took ${elapsed}" "$2" "$icon"
+}
+
+# colorize
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/colorize
+# @required pygments or chroma
+ZSH_COLORIZE_TOOL=chroma
+ZSH_COLORIZE_STYLE="colorful"
+ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
+
+# eza
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/eza
+# @required eza
+zstyle ':omz:plugins:eza' dirs-first yes
+zstyle ':omz:plugins:eza' git-status yes
+zstyle ':omz:plugins:eza' header yes
+zstyle ':omz:plugins:eza' show-group yes
+zstyle ':omz:plugins:eza' icons yes
+zstyle ':omz:plugins:eza' color-scale size
+zstyle ':omz:plugins:eza' color-scale-mode gradient
+zstyle ':omz:plugins:eza' size-prefix si
+zstyle ':omz:plugins:eza' time-style relative
+zstyle ':omz:plugins:eza' hyperlink yes
+
+# python
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/python
+PYTHON_AUTO_VRUN=true
+PYTHON_VENV_NAME=".venv"
+PYTHON_VENV_NAMES=($PYTHON_VENV_NAME venv)
+
+# ssh-agent
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent
+zstyle ':omz:plugins:ssh-agent' agent-forwarding yes
+zstyle ':omz:plugins:ssh-agent' lazy yes
+zstyle ':omz:plugins:ssh-agent' quiet yes
+zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-load-keychain
+
+# vi-mode
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vi-mode
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_SET_CURSOR=true
+# MODE_INDICATOR="%F{green}--Normal--%f"
+# INSERT_MODE_INDICATOR="%F{red}--Insert--%f"
+VI_MODE_CURSOR_NORMAL=2
+VI_MODE_CURSOR_VISUAL=2
+VI_MODE_CURSOR_INSERT=5
+VI_MODE_CURSOR_OPPEND=3
+
+# zoxide
+# @see https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zoxide
+# @required zoxide
+ZOXIDE_CMD_OVERRIDE=cd
+
+# zsh-autosuggestions
+# @see https://github.com/zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8,bold,underline"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+# <<<
+
+
+plugins=(
+    aliases
+    brew
+    bgnotify
+    chezmoi
+    colored-man-pages
+    colorize
+    command-not-found
+    copypath
+    copyfile
+    docker
+    docker-compose
+    extract
+    eza
+    flutter
+    fnm
+    gh
+    gitfast
+    git-open
+    gnu-utils
+    gpg-agent
+    kubectl
+    last-working-dir
+    macos
+    man
+    pod
+    python
+    safe-paste
+    ssh
+    ssh-agent
+    sudo
+    uv
+    vi-mode
+    you-should-use
+    zoxide
+    zsh-autosuggestions
+    zsh-history-substring-search
+    zsh-interactive-cd
+    zsh-syntax-highlighting
+)
+
+
+# Shell completion configuration
+fpath+=${HOMEBREW_PREFIX}/share/zsh/site-functions
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+autoload -U compinit && compinit -d $ZSH_COMPDUMP
+
+source "$ZSH/oh-my-zsh.sh"
+
+
+# >>> User configuration
+
+# You may need to manually set your language environment
+export LANG=zh_CN.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# History
+export HISTFILE=${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history
+(( HISTSIZE = (2 ** 31) - 1 ))   # Number of history can be saved in memory
+(( SAVEHIST = (2 ** 31) - 1 ))   # Number of history can be saved in HISTFILE
+setopt INC_APPEND_HISTORY        # Write to the history file immediastely, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+
+# <<<
+
+
+# >>> Alias and Functions
+alias top="btop"
+alias cat="ccat"
+alias pip="pip3"
+alias pn="pnpm"
+alias python="python3"
+alias test-gpg="echo 'test' | gpg --clearsign"
+alias vim="nvim"
+alias wget="wget --hsts-file=${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"
+
+# bsi = Brew Search + Info
+# @required fzf
+# This function searches for packages and lets you view their info in real-time within the fzf preview window.
+bsi() {
+  brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap
+}
+
+# bsii = Brew Search + Info + Install
+# @required fzf
+# An enhanced version of bsi, pressing Enter on a selection will install it directly.
+bsii() {
+  local selected_pkg
+  selected_pkg=$(brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap)
+  if [[ -n "$selected_pkg" ]]; then
+    brew install "$selected_pkg"
+  fi
+}
+
+# <<<
+
+
+# >>> Shell integration
+
+# Ghostty shell integration.
+# @see https://ghostty.org/docs/features/shell-integration
+GHOSTTY_INTEGRATION_PATH="${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
+if [[ -n "${GHOSTTY_RESOURCES_DIR}" ]] && [[ -f "${GHOSTTY_INTEGRATION_PATH}" ]]; then
+    source "${GHOSTTY_INTEGRATION_PATH}"
+fi
+
+# Homebrew Command Not Found
+# @see https://github.com/Homebrew/homebrew-command-not-found
+HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"
+if [[ -f "${HOMEBREW_COMMAND_NOT_FOUND_HANDLER}" ]]; then
+    source "${HOMEBREW_COMMAND_NOT_FOUND_HANDLER}";
+fi
+
+# Bitwarden CLI
+# @see https://bitwarden.com/help/cli
+eval "$(bw completion --shell zsh); compdef _bw bw;"
+
+# fnm
+# @see https://github.com/Schniz/fnm
+# This "> /dev/null 2>&1" is important, in order not to use the print of fnm
+eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)" > /dev/null 2>&1
+
+# <<<
+
+
+# Powerlevel10k
+# @see https://github.com/romkatv/powerlevel10k
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+P10K_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.p10k.zsh"
+if [[ -f "${P10K_CONFIG_FILE}" ]]; then
+    source "${P10K_CONFIG_FILE}"
+fi
+
