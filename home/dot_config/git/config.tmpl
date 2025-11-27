@@ -7,14 +7,26 @@
     signingkey = 2EC098E5B0469757
 
 [gpg]
+{{- if eq .chezmoi.os "windows" }}
+    program = "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
+{{- else if eq .chezmoi.os "darwin" }}
     program = /opt/homebrew/bin/gpg
+{{- else }}
+    program = /usr/bin/gpg
+{{- end }}
 
 [commit]
     gpgsign = true
     verbose = true
 
 [credential]
+{{- if eq .chezmoi.os "darwin" }}
     helper = osxkeychain
+{{- else if lookPath "git-credential-manager" }}
+    helper = manager
+{{- else }}
+    helper = cache --timeout=3600
+{{- end }}
 
 # =======================================================
 # 2. Performance & System
@@ -22,8 +34,22 @@
 [core]
     fsmonitor = true
     untrackedCache = true
+
+{{- if eq .chezmoi.os "windows" }}
+    autocrlf = true
+{{- else }}
     autocrlf = input
+{{- end }}
+
+{{- if eq .chezmoi.os "windows" }}
+    filemode = false
+{{- else }}
+    filemode = true
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
     precomposeunicode = true
+{{- end }}
 
 [maintenance]
     auto = true
@@ -45,6 +71,7 @@
 [column]
     ui = auto
 
+{{ if lookPath "delta" -}}
 [core]
     pager = delta
 
@@ -56,10 +83,7 @@
     side-by-side = true
     hyperlinks = true
     navigate = true
-    wrap-max-lines = unlimited
-
-[merge]
-    conflictstyle = zdiff3
+{{- end }}
 
 # =======================================================
 # 4. Diff & Merge Logic
@@ -69,6 +93,9 @@
     colorMoved = plain
     mnemonicPrefix = true
     renames = true
+
+[merge]
+    conflictstyle = zdiff3
 
 [rerere]
     enabled = true
@@ -114,6 +141,6 @@
     undo = reset HEAD~1 --mixed
     unstage = reset HEAD --
 
-    ignore = update-index --assume-unchanged
-    unignore = update-index --no-assume-unchanged
-
+    ignore = update-index --skip-worktree
+    unignore = update-index --no-skip-worktree
+    ignored = !git ls-files -v | grep "^S"
