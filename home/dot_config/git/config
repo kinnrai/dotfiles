@@ -1,0 +1,119 @@
+# =======================================================
+# 1. Identity & Security
+# =======================================================
+[user]
+    name = kinnrai
+    email = me@kinnrai.com
+    signingkey = 2EC098E5B0469757
+
+[gpg]
+    program = /opt/homebrew/bin/gpg
+
+[commit]
+    gpgsign = true
+    verbose = true
+
+[credential]
+    helper = osxkeychain
+
+# =======================================================
+# 2. Performance & System
+# =======================================================
+[core]
+    fsmonitor = true
+    untrackedCache = true
+    autocrlf = input
+    precomposeunicode = true
+
+[maintenance]
+    auto = true
+    strategy = incremental
+
+[pack]
+    threads = 0
+
+[grep]
+    threads = 0
+
+[fetch]
+    parallel = 0
+    writeCommitGraph = true
+
+# =======================================================
+# 3. UI & Visualization
+# =======================================================
+[column]
+    ui = auto
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    line-numbers = true
+    side-by-side = true
+    hyperlinks = true
+    navigate = true
+    wrap-max-lines = unlimited
+
+[merge]
+    conflictstyle = zdiff3
+
+# =======================================================
+# 4. Diff & Merge Logic
+# =======================================================
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+
+[rerere]
+    enabled = true
+    autoupdate = true
+
+[pull]
+    rebase = true
+
+[rebase]
+    autoStash = true
+    autoSquash = true
+    updateRefs = true
+
+# =======================================================
+# 5. Repository Management
+# =======================================================
+[init]
+    defaultBranch = master
+
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[fetch]
+    prune = true
+    pruneTags = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+# =======================================================
+# 6. Aliases
+# =======================================================
+[alias]
+    last = log -1 HEAD --stat
+    logg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    rank = shortlog -sn --no-merges
+
+    undo = reset HEAD~1 --mixed
+    unstage = reset HEAD --
+
+    ignore = update-index --assume-unchanged
+    unignore = update-index --no-assume-unchanged
+
