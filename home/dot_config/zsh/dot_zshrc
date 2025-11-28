@@ -198,6 +198,8 @@ alias updateall='brew update && brew upgrade --greedy && brew cleanup && mas upg
 alias vim="nvim"
 alias wget="wget --hsts-file=${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"
 
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
 # bsi = Brew Search + Info
 # @required fzf
 # This function searches for packages and lets you view their info in real-time within the fzf preview window.
