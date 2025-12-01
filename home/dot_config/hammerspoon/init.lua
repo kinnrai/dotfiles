@@ -31,3 +31,10 @@ hs.hotkey.bind({'option'}, 'W', function()
     -- and move the window to the next screen setting the same unitRect
     win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
 end)
+
+-- @see https://www.hammerspoon.org/Spoons/FnMate.html
+local FnMate = hs.loadSpoon("FnMate")
+
+-- @see https://www.hammerspoon.org/Spoons/MiddleClickDragScroll.html
+local MiddleClickDragScroll = hs.loadSpoon("MiddleClickDragScroll"):start()
+
