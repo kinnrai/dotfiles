@@ -12,7 +12,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>使用 Keka 压缩或提取</string>
+				<string>Open in Keka</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
