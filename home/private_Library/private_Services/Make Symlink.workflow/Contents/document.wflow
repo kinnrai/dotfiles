@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>533</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>自动操作</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>运行Shell脚本</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string># 1. Get the directory of the first file
+START_DIR=$(dirname "$1")
+
+# 2. Pick target folder (Uses system language automatically)
+DEST_DIR=$(osascript -e '
+    on run {startPath}
+        try
+            set startFolder to POSIX file startPath as alias
+            # Set default location to current directory
+            set selectedFolder to choose folder default location startFolder
+            return POSIX path of selectedFolder
+        on error
+            return ""
+        end try
+    end run' -- "$START_DIR")
+
+# Exit if user canceled
+if [ -z "$DEST_DIR" ]; then
+    exit 0
+fi
+
+LAST_LINK=""
+
+# 3. Create symlinks
+for f in "$@"
+do
+    FILE_NAME=$(basename "$f")
+    TARGET_PATH="${DEST_DIR}${FILE_NAME}"
+    FINAL_PATH=""
+    
+    # Check if target file already exists
+    if [ -e "$TARGET_PATH" ]; then
+        # Conflict: append " symlink"
+        FINAL_PATH="${TARGET_PATH} symlink"
+        ln -s "$f" "$FINAL_PATH"
+    else
+        # No conflict: use original name
+        FINAL_PATH="$TARGET_PATH"
+        ln -s "$f" "$FINAL_PATH"
+    fi
+    
+    # Save the last path for revealing
+    LAST_LINK="$FINAL_PATH"
+done
+
+# 4. Play sound effect (background)
+afplay /System/Library/Sounds/Glass.aiff &amp;
+
+# 5. Reveal the result in Finder
+if [ -n "$LAST_LINK" ]; then
+    open -R "$LAST_LINK"
+fi</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>B8F18A27-287B-4429-994D-ED0C45290482</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>脚本</string>
+					<string>命令</string>
+					<string>运行</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>1D0188E1-A1BF-4910-84A4-9AB54E33CD8A</string>
+				<key>UUID</key>
+				<string>19F2F894-EB85-4B1B-B3E8-163B6FC256C4</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>309.000000:305.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>applicationBundleID</key>
+		<string>com.apple.finder</string>
+		<key>applicationBundleIDsByPath</key>
+		<dict>
+			<key>/System/Library/CoreServices/Finder.app</key>
+			<string>com.apple.finder</string>
+		</dict>
+		<key>applicationPath</key>
+		<string>/System/Library/CoreServices/Finder.app</string>
+		<key>applicationPaths</key>
+		<array>
+			<string>/System/Library/CoreServices/Finder.app</string>
+		</array>
+		<key>customImageFileData</key>
+		<data>
+		PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdC
+		b3g9IjAgMCA2NDAgNjQwIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDcuMS4w
+		IGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExp
+		Y2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUg
+		Q29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTQ1
+		MS41IDE2MEM0MzQuOSAxNjAgNDE4LjggMTY0LjUgNDA0LjcgMTcyLjdDMzg4
+		LjkgMTU2LjcgMzcwLjUgMTQzLjMgMzUwLjIgMTMzLjJDMzc4LjQgMTA5LjIg
+		NDE0LjMgOTYgNDUxLjUgOTZDNTM3LjkgOTYgNjA4IDE2NiA2MDggMjUyLjVD
+		NjA4IDI5NCA1OTEuNSAzMzMuOCA1NjIuMiAzNjMuMUw0OTEuMSA0MzQuMkM0
+		NjEuOCA0NjMuNSA0MjIgNDgwIDM4MC41IDQ4MEMyOTQuMSA0ODAgMjI0IDQx
+		MCAyMjQgMzIzLjVDMjI0IDMyMiAyMjQgMzIwLjUgMjI0LjEgMzE5QzIyNC42
+		IDMwMS4zIDIzOS4zIDI4Ny40IDI1NyAyODcuOUMyNzQuNyAyODguNCAyODgu
+		NiAzMDMuMSAyODguMSAzMjAuOEMyODguMSAzMjEuNyAyODguMSAzMjIuNiAy
+		ODguMSAzMjMuNEMyODguMSAzNzQuNSAzMjkuNSA0MTUuOSAzODAuNiA0MTUu
+		OUM0MDUuMSA0MTUuOSA0MjguNiA0MDYuMiA0NDYgMzg4LjhMNTE3LjEgMzE3
+		LjdDNTM0LjQgMzAwLjQgNTQ0LjIgMjc2LjggNTQ0LjIgMjUyLjNDNTQ0LjIg
+		MjAxLjIgNTAyLjggMTU5LjggNDUxLjcgMTU5Ljh6TTMwNy4yIDIzNy4zQzMw
+		NS4zIDIzNi41IDMwMy40IDIzNS40IDMwMS43IDIzNC4yQzI4OS4xIDIyNy43
+		IDI3NC43IDIyNCAyNTkuNiAyMjRDMjM1LjEgMjI0IDIxMS42IDIzMy43IDE5
+		NC4yIDI1MS4xTDEyMy4xIDMyMi4yQzEwNS44IDMzOS41IDk2IDM2My4xIDk2
+		IDM4Ny42Qzk2IDQzOC43IDEzNy40IDQ4MC4xIDE4OC41IDQ4MC4xQzIwNSA0
+		ODAuMSAyMjEuMSA0NzUuNyAyMzUuMiA0NjcuNUMyNTEgNDgzLjUgMjY5LjQg
+		NDk2LjkgMjg5LjggNTA3QzI2MS42IDUzMC45IDIyNS44IDU0NC4yIDE4OC41
+		IDU0NC4yQzEwMi4xIDU0NC4yIDMyIDQ3NC4yIDMyIDM4Ny43QzMyIDM0Ni4y
+		IDQ4LjUgMzA2LjQgNzcuOCAyNzcuMUwxNDguOSAyMDZDMTc4LjIgMTc2Ljcg
+		MjE4IDE2MC4yIDI1OS41IDE2MC4yQzM0Ni4xIDE2MC4yIDQxNiAyMzAuOCA0
+		MTYgMzE3LjFDNDE2IDMxOC40IDQxNiAzMTkuNyA0MTYgMzIxQzQxNS42IDMz
+		OC43IDQwMC45IDM1Mi42IDM4My4yIDM1Mi4yQzM2NS41IDM1MS44IDM1MS42
+		IDMzNy4xIDM1MiAzMTkuNEMzNTIgMzE4LjYgMzUyIDMxNy45IDM1MiAzMTcu
+		MUMzNTIgMjgzLjQgMzM0IDI1My44IDMwNy4yIDIzNy41eiIvPjwvc3ZnPg==
+		</data>
+		<key>customImageFileExtension</key>
+		<string>svg</string>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>15</integer>
+		<key>processesInput</key>
+		<false/>
+		<key>serviceApplicationBundleID</key>
+		<string>com.apple.finder</string>
+		<key>serviceApplicationPath</key>
+		<string>/System/Library/CoreServices/Finder.app</string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.fileSystemObject</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<false/>
+		<key>useAutomaticInputType</key>
+		<false/>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
