@@ -35,11 +35,11 @@ vim.opt.showmode = false
 -- Show invisible characters
 vim.opt.list = true
 vim.opt.listchars = {
-    tab = "» ",
-    trail = "·",
-    nbsp = "␣",
-    extends = "›",
-    precedes = "‹",
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
+  extends = "›",
+  precedes = "‹",
 }
 
 -- Customize fill characters
@@ -76,8 +76,8 @@ vim.opt.splitbelow = true -- open new vertical splits to the bottom of the curre
 vim.opt.splitright = true -- open new horizontal splits to the right of the current window
 
 -- Tabs and indentation
-vim.opt.tabstop = 2        -- number of spaces that a <Tab> in the file counts for
-vim.opt.shiftwidth = 2     -- number of spaces to use for each step of (auto)indent
+vim.opt.tabstop = 4        -- number of spaces that a <Tab> in the file counts for
+vim.opt.shiftwidth = 4     -- number of spaces to use for each step of (auto)indent
 vim.opt.expandtab = true   -- use spaces instead of tabs
 vim.opt.autoindent = true  -- copy indent from current line when starting a new line
 vim.opt.smartindent = true -- add indents automatically
