@@ -135,6 +135,7 @@ plugins=(
     git-open
     gnu-utils
     gpg-agent
+    helm
     huggingface-cli
     kubectl
     last-working-dir
