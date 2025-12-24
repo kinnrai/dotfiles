@@ -192,9 +192,6 @@ setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded 
 
 # >>> Alias and Functions
 alias cat="ccat"
-alias pip="pip3"
-alias pn="pnpm"
-alias python="python3"
 alias test-gpg="echo 'test' | gpg --clearsign"
 alias top="btop"
 alias updateall='brew update && brew upgrade --greedy && brew cleanup && mas upgrade'
