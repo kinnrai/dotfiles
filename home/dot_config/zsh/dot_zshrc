@@ -141,6 +141,7 @@ plugins=(
     last-working-dir
     macos
     man
+    mise
     pod
     python
     safe-paste
@@ -242,11 +243,6 @@ fi
 # Bitwarden CLI
 # @see https://bitwarden.com/help/cli
 eval "$(bw completion --shell zsh); compdef _bw bw;"
-
-# fnm
-# @see https://github.com/Schniz/fnm
-# This "> /dev/null 2>&1" is important, in order not to use the print of fnm
-eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)" > /dev/null 2>&1
 
 # Shell-GPT integration ZSH v0.2
 # @see https://github.com/TheR1D/shell_gpt#shell-integration
