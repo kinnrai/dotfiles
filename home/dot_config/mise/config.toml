@@ -1,0 +1,19 @@
+[settings]
+color_theme = "catppuccin"
+experimental = true
+
+[settings.npm]
+package_manager = "bun"
+
+[tools]
+bun = "latest"
+flutter = "latest"
+go = "latest"
+java = "latest"
+node = "latest"
+"pipx:ruff" = "latest"
+"pipx:pdf2zh" = { version = "latest", uvx_args = "--python 3.12" }
+"pipx:shell-gpt" = "latest"
+pnpm = "latest"
+python = "latest"
+uv = "latest"
