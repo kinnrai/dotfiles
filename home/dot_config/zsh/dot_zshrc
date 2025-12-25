@@ -143,6 +143,7 @@ plugins=(
     flutter
     fnm
     fzf-tab
+    fzf-tab-source
     gh
     gitfast
     git-open
@@ -212,24 +213,6 @@ alias vim="nvim"
 alias wget="wget --hsts-file=${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"
 
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
-
-# bsi = Brew Search + Info
-# @required fzf
-# This function searches for packages and lets you view their info in real-time within the fzf preview window.
-bsi() {
-  brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap
-}
-
-# bsii = Brew Search + Info + Install
-# @required fzf
-# An enhanced version of bsi, pressing Enter on a selection will install it directly.
-bsii() {
-  local selected_pkg
-  selected_pkg=$(brew search "$1" | sed '/^==>/d;/^$/d' | fzf --preview 'brew info {}' --preview-window=right:60%:wrap)
-  if [[ -n "$selected_pkg" ]]; then
-    brew install "$selected_pkg"
-  fi
-}
 
 # <<<
 
