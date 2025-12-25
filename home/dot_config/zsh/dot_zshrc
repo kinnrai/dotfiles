@@ -130,6 +130,7 @@ plugins=(
     aliases
     brew
     bgnotify
+    bun
     chezmoi
     colored-man-pages
     colorize
