@@ -49,6 +49,9 @@ export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 # Python History
 export PYTHON_HISTORY="$XDG_STATE_HOME/python_history" # for python v3.13.0a3 or later
 
+# rustup (Rust)
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
 # uv
 export PATH="$HOME/.local/bin:$PATH"
 
