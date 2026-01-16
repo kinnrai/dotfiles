@@ -1,0 +1,15 @@
+# Always download the best at 4K or lower
+-f "bestvideo[height<=2160]+bestaudio/best[height<=2160]"
+
+# If the downloaded file is not an MKV, automatically merge or convert it to MKV
+--merge-output-format mkv
+
+# File save path
+-P "~/Downloads"
+
+# File naming format
+-o "[%(extractor)s] %(title)s.%(ext)s"
+
+# Avoid 403 forbidden or download certain restricted videos.
+--cookies-from-browser safari
+
