@@ -7,13 +7,16 @@ package_manager = "bun"
 
 [tools]
 bun = "latest"
+deno = "latest"
+ffmpeg = "latest"
 flutter = "latest"
 go = "latest"
 java = "latest"
 node = "latest"
-"pipx:ruff" = "latest"
 "pipx:pdf2zh" = { version = "latest", uvx_args = "--python 3.12" }
+"pipx:ruff" = "latest"
 "pipx:shell-gpt" = "latest"
+"pipx:yt-dlp" = { version = "latest", extras = "default" }
 pnpm = "latest"
 python = "latest"
 rust = "latest"
